@@ -2,177 +2,219 @@
 import React, { useState } from 'react';
 import { 
   ExternalLink, 
-  Search, 
-  Code2, 
+  Github, 
   Globe, 
+  Search, 
   LayoutGrid, 
+  List, 
+  Layers, 
   ArrowUpRight,
-  Monitor,
-  Database,
-  Smartphone,
-  Github
+  Code2,
+  Monitor
 } from 'lucide-react';
 
 const App = () => {
-  const [filter, setFilter] = useState('Semua');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [viewMode, setViewMode] = useState('grid');
 
-  // Data karya Anda - Silakan tambahkan atau ubah link di sini
+  // DATA KARYA - Anda bisa menambah atau mengubah data di sini
   const projects = [
     {
       id: 1,
-      title: "Portal PPDB Online",
-      category: "Web App",
-      description: "Sistem pendaftaran peserta didik baru dengan integrasi data otomatis dan validasi real-time.",
+      title: "Sistem PPDB Online",
+      category: "Portal Pendaftaran",
+      description: "Sistem pendaftaran siswa baru terintegrasi dengan validasi data otomatis dan dashboard admin.",
       tags: ["React", "Firebase", "Tailwind"],
-      link: "https://link-ppdb-anda.com",
-      image: "https://images.unsplash.com/photo-1510074377623-8cf13fb86c08?auto=format&fit=crop&q=80&w=400"
+      link: "https://example.com/ppdb", // Ganti dengan link asli karya Anda
+      github: "https://github.com/masterkin998",
+      image: "https://images.unsplash.com/photo-1517245315810-97a4d915da3e?auto=format&fit=crop&q=80&w=800"
     },
     {
       id: 2,
-      title: "Sistem Manajemen Arsip",
-      category: "Tools",
-      description: "Aplikasi pengelolaan dokumen digital untuk efisiensi administrasi perkantoran.",
-      tags: ["Apps Script", "Sheets", "Bootstrap"],
-      link: "https://link-arsip-anda.com",
-      image: "https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&q=80&w=400"
+      title: "Portal Beasiswa Digital",
+      category: "E-Government",
+      description: "Platform pengajuan beasiswa daerah dengan sistem seleksi berkas berbasis kriteria.",
+      tags: ["JavaScript", "Sheets API", "CSS"],
+      link: "https://example.com/beasiswa",
+      github: "https://github.com/masterkin998",
+      image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800"
     },
     {
       id: 3,
-      title: "Monitoring Inventaris",
-      category: "Dashboard",
-      description: "Visualisasi data stok barang secara real-time untuk memantau keluar masuknya aset.",
-      tags: ["JavaScript", "Chart.js"],
-      link: "https://link-inventaris-anda.com",
-      image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&q=80&w=400"
+      title: "E-Arsip Dokumen",
+      category: "Tools",
+      description: "Penyimpanan dokumen digital kantor yang aman dan mudah dicari berdasarkan kategori.",
+      tags: ["PHP", "MySQL", "Bootstrap"],
+      link: "https://example.com/arsip",
+      github: "https://github.com/masterkin998",
+      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      id: 4,
+      title: "Sistem Antrian Publik",
+      category: "Utility",
+      description: "Manajemen nomor antrian online untuk mengurangi kerumunan di lokasi layanan publik.",
+      tags: ["React", "Realtime DB"],
+      link: "https://example.com/antrian",
+      github: "https://github.com/masterkin998",
+      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800"
     }
   ];
 
-  const categories = ['Semua', 'Web App', 'Tools', 'Dashboard'];
-
-  const filteredProjects = filter === 'Semua' 
-    ? projects 
-    : projects.filter(p => p.category === filter);
+  const filteredProjects = projects.filter(p => 
+    p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    p.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans">
-      {/* Header / Intro */}
-      <header className="bg-white border-b border-slate-200 pt-16 pb-12 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
-            <Code2 size={16} />
-            Showcase Karya Digital
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+      {/* Header / Navbar */}
+      <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="bg-indigo-600 p-2 rounded-lg">
+              <Layers className="text-white w-5 h-5" />
+            </div>
+            <h1 className="text-xl font-bold tracking-tight">KatalogKarya</h1>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">
-            Daftar Portofolio & Portal Digital
-          </h1>
-          <p className="text-slate-500 text-lg max-w-2xl mx-auto">
-            Kumpulan aplikasi, portal, dan sistem digital yang telah dikembangkan untuk berbagai kebutuhan instansi dan publik.
-          </p>
+          <div className="flex items-center gap-4">
+            <a href="https://masterkin998.github.io/profil-makiiiin" className="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">
+              Profil Saya
+            </a>
+            <div className="h-4 w-[1px] bg-slate-200"></div>
+            <a href="https://github.com/masterkin998" target="_blank" rel="noreferrer">
+              <Github className="w-5 h-5 text-slate-600 hover:text-black transition-colors" />
+            </a>
+          </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 py-12">
-        
-        {/* Filter Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-          <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
-                  filter === cat 
-                  ? 'bg-slate-900 text-white shadow-lg shadow-slate-200' 
-                  : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-          
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+      <main className="max-w-6xl mx-auto px-6 py-12">
+        {/* Hero Section */}
+        <section className="mb-16 text-center md:text-left">
+          <h2 className="text-4xl md:text-5xl font-black mb-4 text-slate-900">
+            Daftar Portofolio <span className="text-indigo-600">Portal Digital</span>
+          </h2>
+          <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
+            Kumpulan proyek aplikasi web dan portal pendaftaran yang telah saya kembangkan untuk berbagai kebutuhan instansi dan publik.
+          </p>
+        </section>
+
+        {/* Filter & Search Bar */}
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-10">
+          <div className="relative w-full md:w-96">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
             <input 
               type="text" 
-              placeholder="Cari nama karya..."
-              className="bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2 w-full md:w-64 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+              placeholder="Cari nama portal atau teknologi..." 
+              className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all"
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
+          </div>
+          
+          <div className="flex bg-white border border-slate-200 p-1 rounded-xl shadow-sm">
+            <button 
+              onClick={() => setViewMode('grid')}
+              className={`p-2 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-indigo-50 text-indigo-600 shadow-inner' : 'text-slate-400 hover:text-slate-600'}`}
+            >
+              <LayoutGrid className="w-5 h-5" />
+            </button>
+            <button 
+              onClick={() => setViewMode('list')}
+              className={`p-2 rounded-lg transition-all ${viewMode === 'list' ? 'bg-indigo-50 text-indigo-600 shadow-inner' : 'text-slate-400 hover:text-slate-600'}`}
+            >
+              <List className="w-5 h-5" />
+            </button>
           </div>
         </div>
 
-        {/* Project Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project) => (
-            <div key={project.id} className="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-300">
-              {/* Thumbnail Placeholder */}
-              <div className="h-48 overflow-hidden relative">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-3 left-3">
-                  <span className="bg-white/90 backdrop-blur-md text-slate-900 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider shadow-sm">
-                    {project.category}
-                  </span>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-slate-500 text-sm leading-relaxed mb-4">
-                  {project.description}
-                </p>
-                
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="text-[11px] font-medium text-slate-400 bg-slate-50 px-2 py-0.5 rounded border border-slate-100">
-                      #{tag}
+        {/* Project Display */}
+        {viewMode === 'grid' ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProjects.map((project) => (
+              <div key={project.id} className="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-2xl hover:shadow-indigo-100 hover:-translate-y-1 transition-all duration-300">
+                <div className="h-48 overflow-hidden relative">
+                  <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-indigo-600 uppercase tracking-wider shadow-sm">
+                      {project.category}
                     </span>
-                  ))}
+                  </div>
                 </div>
-
-                {/* Action Button */}
-                <a 
-                  href={project.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full gap-2 bg-slate-50 text-slate-700 py-3 rounded-xl font-bold border border-slate-200 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-all active:scale-[0.98]"
-                >
-                  Kunjungi Website <ArrowUpRight size={18} />
-                </a>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-indigo-600 transition-colors">{project.title}</h3>
+                  <p className="text-sm text-slate-500 mb-6 line-clamp-2 leading-relaxed">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {project.tags.map(tag => (
+                      <span key={tag} className="text-[11px] font-medium bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <a 
+                      href={project.link} 
+                      className="flex-1 bg-slate-900 text-white py-2.5 rounded-xl text-center text-sm font-bold flex items-center justify-center gap-2 hover:bg-indigo-600 transition-all active:scale-95"
+                    >
+                      Buka Portal <ArrowUpRight className="w-4 h-4" />
+                    </a>
+                    <a 
+                      href={project.github}
+                      className="p-2.5 border border-slate-200 rounded-xl hover:bg-slate-50 text-slate-600 transition-all"
+                      title="Source Code"
+                    >
+                      <Code2 className="w-5 h-5" />
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {filteredProjects.map((project) => (
+              <div key={project.id} className="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col md:flex-row items-center gap-6 hover:border-indigo-200 transition-all group">
+                <div className="w-full md:w-32 h-24 rounded-xl overflow-hidden shrink-0">
+                  <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex-1 text-center md:text-left">
+                  <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-1 block">{project.category}</span>
+                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{project.title}</h3>
+                  <p className="text-sm text-slate-500">{project.description}</p>
+                </div>
+                <div className="flex gap-3 shrink-0">
+                  <a href={project.link} className="bg-slate-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-indigo-600 transition-all">Lihat</a>
+                  <a href={project.github} className="p-2.5 border border-slate-200 rounded-xl hover:bg-slate-50"><Github className="w-5 h-5" /></a>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
-        {/* Empty State */}
         {filteredProjects.length === 0 && (
-          <div className="text-center py-20">
-            <div className="bg-slate-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
-              <Search size={24} />
+          <div className="py-20 text-center">
+            <div className="bg-slate-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Search className="text-slate-400 w-8 h-8" />
             </div>
-            <p className="text-slate-500">Tidak ada karya ditemukan di kategori ini.</p>
+            <h3 className="text-xl font-bold text-slate-900">Karya tidak ditemukan</h3>
+            <p className="text-slate-500">Coba gunakan kata kunci pencarian yang lain.</p>
           </div>
         )}
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white py-12 px-4">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-sm text-slate-400">
-            © 2024 Portofolio Digital. Dikembangkan oleh <span className="text-slate-900 font-semibold">Masterkin998</span>
+      <footer className="border-t border-slate-200 py-12 mt-20">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="text-center md:text-left">
+            <p className="font-bold text-slate-900">Makin Catalog &bull; 2024</p>
+            <p className="text-sm text-slate-500">Dikembangkan untuk dokumentasi portal digital publik.</p>
           </div>
-          <div className="flex gap-4">
-            <a href="https://github.com" className="text-slate-400 hover:text-slate-900 transition-colors"><Github size={20} /></a>
-            <a href="#" className="text-slate-400 hover:text-slate-900 transition-colors"><Globe size={20} /></a>
-            <a href="#" className="text-slate-400 hover:text-slate-900 transition-colors"><Monitor size={20} /></a>
+          <div className="flex items-center gap-6">
+            <a href="https://masterkin998.github.io/profil-makiiiin" className="flex items-center gap-2 text-sm font-semibold text-indigo-600 hover:opacity-75 transition-all">
+              <ArrowUpRight className="w-4 h-4" /> Kembali ke Profil Utama
+            </a>
           </div>
         </div>
       </footer>
@@ -183,4 +225,4 @@ const App = () => {
 export default App;
 
 ```
-
+        
