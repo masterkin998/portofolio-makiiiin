@@ -1,111 +1,240 @@
-```react
-import React, { useState } from 'react';
-import { 
-  ExternalLink, 
-  Github, 
-  Globe, 
-  Search, 
-  LayoutGrid, 
-  List, 
-  Layers, 
-  ArrowUpRight,
-  Code2,
-  Monitor
-} from 'lucide-react';
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KatalogKarya - Portofolio Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+    <div id="root"></div>
 
-const App = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [viewMode, setViewMode] = useState('grid');
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-  // DATA KARYA - Anda bisa menambah atau mengubah data di sini
-  const projects = [
-    {
-      id: 1,
-      title: "Sistem PPDB Online",
-      category: "Portal Pendaftaran",
-      description: "Sistem pendaftaran siswa baru terintegrasi dengan validasi data otomatis dan dashboard admin.",
-      tags: ["React", "Firebase", "Tailwind"],
-      link: "https://example.com/ppdb", // Ganti dengan link asli karya Anda
-      github: "https://github.com/masterkin998",
-      image: "https://images.unsplash.com/photo-1517245315810-97a4d915da3e?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 2,
-      title: "Portal Beasiswa Digital",
-      category: "E-Government",
-      description: "Platform pengajuan beasiswa daerah dengan sistem seleksi berkas berbasis kriteria.",
-      tags: ["JavaScript", "Sheets API", "CSS"],
-      link: "https://example.com/beasiswa",
-      github: "https://github.com/masterkin998",
-      image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 3,
-      title: "E-Arsip Dokumen",
-      category: "Tools",
-      description: "Penyimpanan dokumen digital kantor yang aman dan mudah dicari berdasarkan kategori.",
-      tags: ["PHP", "MySQL", "Bootstrap"],
-      link: "https://example.com/arsip",
-      github: "https://github.com/masterkin998",
-      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      id: 4,
-      title: "Sistem Antrian Publik",
-      category: "Utility",
-      description: "Manajemen nomor antrian online untuk mengurangi kerumunan di lokasi layanan publik.",
-      tags: ["React", "Realtime DB"],
-      link: "https://example.com/antrian",
-      github: "https://github.com/masterkin998",
-      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800"
-    }
-  ];
+        // Custom Icon Component to handle Lucide in CDN version
+        const Icon = ({ name, className = "w-5 h-5" }) => {
+            useEffect(() => {
+                lucide.createIcons();
+            }, [name]);
+            return <i data-lucide={name} className={className}></i>;
+        };
 
-  const filteredProjects = projects.filter(p => 
-    p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+        const App = () => {
+            const [searchTerm, setSearchTerm] = useState('');
+            const [viewMode, setViewMode] = useState('grid');
 
-  return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
-      {/* Header / Navbar */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="bg-indigo-600 p-2 rounded-lg">
-              <Layers className="text-white w-5 h-5" />
-            </div>
-            <h1 className="text-xl font-bold tracking-tight">KatalogKarya</h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <a href="https://masterkin998.github.io/profil-makiiiin" className="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">
-              Profil Saya
-            </a>
-            <div className="h-4 w-[1px] bg-slate-200"></div>
-            <a href="https://github.com/masterkin998" target="_blank" rel="noreferrer">
-              <Github className="w-5 h-5 text-slate-600 hover:text-black transition-colors" />
-            </a>
-          </div>
-        </div>
-      </header>
+            const projects = [
+                {
+                    id: 1,
+                    title: "Sistem PPDB Online",
+                    category: "Portal Pendaftaran",
+                    description: "Sistem pendaftaran siswa baru terintegrasi dengan validasi data otomatis dan dashboard admin.",
+                    tags: ["React", "Firebase", "Tailwind"],
+                    link: "https://example.com/ppdb",
+                    github: "https://github.com/masterkin998",
+                    image: "https://images.unsplash.com/photo-1517245315810-97a4d915da3e?auto=format&fit=crop&q=80&w=800"
+                },
+                {
+                    id: 2,
+                    title: "Portal Beasiswa Digital",
+                    category: "E-Government",
+                    description: "Platform pengajuan beasiswa daerah dengan sistem seleksi berkas berbasis kriteria.",
+                    tags: ["JavaScript", "Sheets API", "CSS"],
+                    link: "https://example.com/beasiswa",
+                    github: "https://github.com/masterkin998",
+                    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800"
+                },
+                {
+                    id: 3,
+                    title: "E-Arsip Dokumen",
+                    category: "Tools",
+                    description: "Penyimpanan dokumen digital kantor yang aman dan mudah dicari berdasarkan kategori.",
+                    tags: ["PHP", "MySQL", "Bootstrap"],
+                    link: "https://example.com/arsip",
+                    github: "https://github.com/masterkin998",
+                    image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=800"
+                },
+                {
+                    id: 4,
+                    title: "Sistem Antrian Publik",
+                    category: "Utility",
+                    description: "Manajemen nomor antrian online untuk mengurangi kerumunan di lokasi layanan publik.",
+                    tags: ["React", "Realtime DB"],
+                    link: "https://example.com/antrian",
+                    github: "https://github.com/masterkin998",
+                    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800"
+                }
+            ];
 
-      <main className="max-w-6xl mx-auto px-6 py-12">
-        {/* Hero Section */}
-        <section className="mb-16 text-center md:text-left">
-          <h2 className="text-4xl md:text-5xl font-black mb-4 text-slate-900">
-            Daftar Portofolio <span className="text-indigo-600">Portal Digital</span>
-          </h2>
-          <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
-            Kumpulan proyek aplikasi web dan portal pendaftaran yang telah saya kembangkan untuk berbagai kebutuhan instansi dan publik.
-          </p>
-        </section>
+            const filteredProjects = projects.filter(p => 
+                p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                p.category.toLowerCase().includes(searchTerm.toLowerCase())
+            );
 
-        {/* Filter & Search Bar */}
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-10">
-          <div className="relative w-full md:w-96">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
-            <input 
-              type="text" 
+            return (
+                <div className="min-h-screen flex flex-col">
+                    <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+                        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <div className="bg-indigo-600 p-2 rounded-lg text-white">
+                                    <Icon name="layers" />
+                                </div>
+                                <h1 className="text-xl font-bold tracking-tight">KatalogKarya</h1>
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <a href="https://masterkin998.github.io/profil-makiiiin" className="hidden sm:block text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">
+                                    Profil Saya
+                                </a>
+                                <div className="hidden sm:block h-4 w-[1px] bg-slate-200"></div>
+                                <a href="https://github.com/masterkin998" target="_blank" className="text-slate-600 hover:text-black">
+                                    <Icon name="github" />
+                                </a>
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="max-w-6xl mx-auto px-6 py-12 flex-grow w-full">
+                        <section className="mb-12 text-center md:text-left">
+                            <h2 className="text-4xl md:text-5xl font-black mb-4 text-slate-900 leading-tight">
+                                Daftar Portofolio <span className="text-indigo-600">Portal Digital</span>
+                            </h2>
+                            <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
+                                Kumpulan proyek aplikasi web dan portal pendaftaran yang telah dikembangkan untuk berbagai kebutuhan instansi.
+                            </p>
+                        </section>
+
+                        <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-10">
+                            <div className="relative w-full md:w-96">
+                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                    <Icon name="search" className="w-4 h-4" />
+                                </div>
+                                <input 
+                                    type="text" 
+                                    placeholder="Cari karya..." 
+                                    className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all"
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                            </div>
+                            
+                            <div className="flex bg-white border border-slate-200 p-1 rounded-xl shadow-sm self-end md:self-auto">
+                                <button 
+                                    onClick={() => setViewMode('grid')}
+                                    className={`p-2 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-400 hover:text-slate-600'}`}
+                                >
+                                    <Icon name="layout-grid" />
+                                </button>
+                                <button 
+                                    onClick={() => setViewMode('list')}
+                                    className={`p-2 rounded-lg transition-all ${viewMode === 'list' ? 'bg-indigo-50 text-indigo-600' : 'text-slate-400 hover:text-slate-600'}`}
+                                >
+                                    <Icon name="list" />
+                                </button>
+                            </div>
+                        </div>
+
+                        {viewMode === 'grid' ? (
+                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {filteredProjects.map((project) => (
+                                    <div key={project.id} className="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-2xl hover:shadow-indigo-100 hover:-translate-y-1 transition-all duration-300">
+                                        <div className="h-48 overflow-hidden relative">
+                                            <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                            <div className="absolute top-4 left-4">
+                                                <span className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-indigo-600 uppercase tracking-wider shadow-sm">
+                                                    {project.category}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="p-6">
+                                            <h3 className="text-xl font-bold mb-2 group-hover:text-indigo-600 transition-colors">{project.title}</h3>
+                                            <p className="text-sm text-slate-500 mb-6 line-clamp-2 leading-relaxed">
+                                                {project.description}
+                                            </p>
+                                            <div className="flex flex-wrap gap-2 mb-6">
+                                                {project.tags.map(tag => (
+                                                    <span key={tag} className="text-[11px] font-medium bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <a href={project.link} className="flex-1 bg-slate-900 text-white py-2.5 rounded-xl text-center text-sm font-bold flex items-center justify-center gap-2 hover:bg-indigo-600 transition-all active:scale-95">
+                                                    Buka Portal <Icon name="arrow-up-right" className="w-4 h-4" />
+                                                </a>
+                                                <a href={project.github} className="p-2.5 border border-slate-200 rounded-xl hover:bg-slate-50 text-slate-600">
+                                                    <Icon name="code-2" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="space-y-4">
+                                {filteredProjects.map((project) => (
+                                    <div key={project.id} className="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col md:flex-row items-center gap-6 hover:border-indigo-200 transition-all group">
+                                        <div className="w-full md:w-32 h-24 rounded-xl overflow-hidden shrink-0">
+                                            <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                                        </div>
+                                        <div className="flex-1 text-center md:text-left">
+                                            <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-1 block">{project.category}</span>
+                                            <h3 className="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{project.title}</h3>
+                                            <p className="text-sm text-slate-500">{project.description}</p>
+                                        </div>
+                                        <div className="flex gap-3 shrink-0">
+                                            <a href={project.link} className="bg-slate-900 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-indigo-600 transition-all">Lihat</a>
+                                            <a href={project.github} className="p-2.5 border border-slate-200 rounded-xl hover:bg-slate-50"><Icon name="github" /></a>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {filteredProjects.length === 0 && (
+                            <div className="py-20 text-center">
+                                <div className="bg-slate-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
+                                    <Icon name="search" className="w-8 h-8" />
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-900">Karya tidak ditemukan</h3>
+                                <p className="text-slate-500">Coba gunakan kata kunci pencarian yang lain.</p>
+                            </div>
+                        )}
+                    </main>
+
+                    <footer className="border-t border-slate-200 py-12 mt-20">
+                        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                            <div className="text-center md:text-left">
+                                <p className="font-bold text-slate-900">Makin Catalog &bull; 2024</p>
+                                <p className="text-sm text-slate-500">Dokumentasi portal digital publik.</p>
+                            </div>
+                            <div className="flex items-center gap-6">
+                                <a href="https://masterkin998.github.io/profil-makiiiin" className="flex items-center gap-2 text-sm font-semibold text-indigo-600 hover:underline transition-all">
+                                    <Icon name="arrow-up-right" className="w-4 h-4" /> Kembali ke Profil Utama
+                                </a>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+
+```
               placeholder="Cari nama portal atau teknologi..." 
               className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all"
               onChange={(e) => setSearchTerm(e.target.value)}
